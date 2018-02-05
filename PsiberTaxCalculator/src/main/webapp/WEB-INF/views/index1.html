@@ -34,42 +34,7 @@
 
 	</div>
 
-	<a href="#" onclick="flipDiv('extras');return false" style="text-decoration:none;">
-	<div class="calc-header">
-		<span>Open</span>
-		<b>| PROVIDENT FUND | MEDICAL AID</b>
-	</div>
-	</a>
-	<div id="extras" class="calc-box" style="display:none;visibility:hidden;">
-
-		<div class="row">
-			Does your salary include contributions to a pension, provident fund ?
-			<select onchange="showDiv('pensionfund',(this.value=='yes'?1:0));if(this.value=='no')document.getElementById('pfund').value=0;">
-			<option value="yes">Yes</option>
-			<option value="no" selected>No</option>
-			</select>
-			<div class="dot">?<span class="dottext">This appears as source code 4001, 4003 or 4006 on your IRP5.</span></div>		</div>
-
-		<div class="row" id="pensionfund" style="display:none;visibility:hidden;">
-			&rarr; Please enter the total amount:
-			<input type="text" class="wide" maxlength="10" id="pfund" value="0" onkeyup="this.value=this.value.replace(/[^1234567890.]/g, '');" />
-			<div class="dot" style="visibility:hidden;">?</div>		</div>
-
-		
-				<div class="row">
-			Does your salary include contributions to Medical aid ?
-			<select onchange="showDiv('travelallowance',(this.value=='yes'?1:0));if(this.value=='no')document.getElementById('tallow').value=0;">
-			<option value="yes">Yes</option>
-			<option value="no" selected>No</option>
-			</select>
-			<div class="dot">?<span class="dottext">This appears as source code 3701 on your IRP5.</span></div>		</div>
-
-		<div class="row" id="MedicalAid" style="display:none;visibility:hidden;">
-			&rarr; Please enter the amount:
-			<input type="text" class="wide" maxlength="10" id="tallow" value="0" onkeyup="this.value=this.value.replace(/[^1234567890.]/g, '');" />
-			<div class="dot" style="visibility:hidden;">?</div>		</div>
-
-	</div>
+	
 
 
 	<div style="padding:1em 0 0 0;text-align:right;">
