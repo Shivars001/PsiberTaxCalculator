@@ -79,47 +79,47 @@ public class TaxDataDaoImpl implements TaxDataDao {
 		}
 		else if (totalIncome >= 188001 && totalIncome <= 293600) {
 			tax = (totalIncome - 188000) * Constant.INCOME_TAX_RATE_1_2017 + 33840;
-			System.out.println("Your Tax is " + tax);
+			
 			
 		}
 		else if (totalIncome >= 293601 && totalIncome <= 406400) {
 			tax = (totalIncome - 293600) * Constant.INCOME_TAX_RATE_2_2017 + 61296;
-			System.out.println("Your Tax is 31 %" + tax);
+		
 		}
 		else if (totalIncome >= 406401 && totalIncome <= 550100) {
 			tax = (totalIncome - 406400) * Constant.INCOME_TAX_RATE_3_2017 + 96264;
-			System.out.println("Your Tax is other" + tax);
+			
 		}
 		else if (totalIncome >= 550101 && totalIncome <= 701300) {
 			tax = (totalIncome - 550100) * Constant.INCOME_TAX_RATE_4_2017 + 147996;
-			System.out.println("Your Tax is here" + tax);
+			
 		}
 		else if (totalIncome >= 701301) {
 			tax = (totalIncome - 701300) * Constant.INCOME_TAX_RATE_5_2017 + 206964;
 			
-			System.out.println("Your Tax is taxed" + tax);
 		}
 		
 		//
 		
 		if (Integer.parseInt(ageLevel) < 65) {
 			tax -= primary;
-			System.out.println("Your Tax is  primary" + tax);
+			
 		}
 		
 		if (Integer.parseInt(ageLevel) >= 65) {
 			rebate = primary + secondary;
-			System.out.println(rebate + "rebate");
-			tax = tax - rebate;
+			
+			tax -= rebate;
 			MonthlyTax = tax / 12;
 			
-			System.out
-					.println("Your Tax is  Secondary" + tax + "monthlyTax" + MonthlyTax);
+
 		}
 		if (Integer.parseInt(ageLevel) >= 75) {
 			tax -= primary + tertiary;
-			System.out.println("Your Tax is Tertiary" + tax);
+			
 		}
+		
+		System.out.println("Your Tax is " + tax);
 		
 		MonthlyGross = totalIncome/12;
 		netSalary = MonthlyGross - MonthlyTax;
@@ -168,7 +168,7 @@ public class TaxDataDaoImpl implements TaxDataDao {
 			tax = (totalIncome - 701300) * Constant.INCOME_TAX_RATE_6_2018 + 533634;
 		}
 		
-		//
+		//Tax Rebate
 		if (Integer.parseInt(ageLevel) < 65) {
 			tax -= primary;
 			System.out.println("Your Tax is  primary" + tax);

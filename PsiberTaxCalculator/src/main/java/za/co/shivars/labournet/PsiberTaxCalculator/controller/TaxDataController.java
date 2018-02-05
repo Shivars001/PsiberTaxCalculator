@@ -8,7 +8,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
 import za.co.shivars.labournet.PsiberTaxCalculator.data.TaxDataDao;
-import za.co.shivars.labournet.PsiberTaxCalculator.model.TaxData;
 
 public class TaxDataController {
 	
@@ -23,9 +22,9 @@ public class TaxDataController {
 	// Create new Record
 		@RequestMapping(value = "/newTaxData", method = RequestMethod.GET)
 		public ModelAndView uploadTaxData(ModelAndView model, HttpServletRequest request) {
-			TaxData taxData = new TaxData();
+			
 
-			model.addObject("taxData", taxData);
+			//model.addObject("taxData", taxData);
 			model.setViewName("taxDataForm");
 			return model;
 		}

@@ -19,25 +19,19 @@ import za.co.shivars.labournet.PsiberTaxCalculator.data.TaxDataDao;
 @TransactionConfiguration(defaultRollback = true)
 public class TaxCalculatorTest {
 	
-	
 	@Autowired
-	 TaxDataDao taxDataDao;
-
-	
+	TaxDataDao taxDataDao;
 	
 	@Test
 	public void saveTaxData() {
-		
 		
 		taxDataDao.calculateYearlyTaxSalary("2016/2017", "75", "30000", "0", "MONTHLY");
 		
 		taxDataDao.calculateYearlyTaxSalary("2016/2017", "75", "360000", "0", "YEARLY");
 		
-		
 		taxDataDao.calculateYearlyTaxSalary("2017/2018", "65", "360000", "0", "YEARLY");
 		
 		taxDataDao.calculateYearlyTaxSalary("2017/2018", "75", "30000", "0", "MONTHLY");
-		
 		
 	}
 	
