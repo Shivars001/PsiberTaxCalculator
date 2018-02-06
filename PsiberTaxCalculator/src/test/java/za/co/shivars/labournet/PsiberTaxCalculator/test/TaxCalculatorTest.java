@@ -10,6 +10,7 @@ import org.springframework.test.context.transaction.TransactionConfiguration;
 import org.springframework.transaction.annotation.Transactional;
 
 import za.co.shivars.labournet.PsiberTaxCalculator.data.TaxDataDao;
+import za.co.shivars.labournet.PsiberTaxCalculator.model.TaxData;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = {
@@ -23,16 +24,32 @@ public class TaxCalculatorTest {
 	TaxDataDao taxDataDao;
 	
 	@Test
-	public void saveTaxData() {
+	public void saveTaxMonthlyData() {
 		
-		taxDataDao.calculateYearlyTaxSalary("2016/2017", "75", "30000", "0", "MONTHLY");
+		TaxData data = new TaxData();
+		data.setAge("75");
+		data.setEarnPeriod("MONTHLY");
+		data.setGrossIncome("30000");
+		data.setMedMembers("0");
+		data.setYearEnd("2016/2017");
 		
-		taxDataDao.calculateYearlyTaxSalary("2016/2017", "75", "360000", "0", "YEARLY");
-		
-		taxDataDao.calculateYearlyTaxSalary("2017/2018", "65", "360000", "0", "YEARLY");
-		
-		taxDataDao.calculateYearlyTaxSalary("2017/2018", "75", "30000", "0", "MONTHLY");
+		taxDataDao.calculateYearlyTaxSalary(data);
+	
 		
 	}
 	
+	@Test
+	public void saveTaxYearlyData() {
+		
+		TaxData data = new TaxData();
+		data.setAge("65");
+		data.setEarnPeriod("YEARLY");
+		data.setGrossIncome("360000");
+		data.setMedMembers("0");
+		data.setYearEnd("2017/2018");
+		
+		taxDataDao.calculateYearlyTaxSalary(data);
+	
+		
+	}
 }
