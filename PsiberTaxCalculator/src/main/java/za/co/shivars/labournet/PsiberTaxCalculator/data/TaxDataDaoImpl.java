@@ -3,9 +3,7 @@
  */
 package za.co.shivars.labournet.PsiberTaxCalculator.data;
 
-import org.springframework.stereotype.Repository;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import za.co.shivars.labournet.PsiberTaxCalculator.model.TaxData;
 import za.co.shivars.labournet.PsiberTaxCalculator.util.Constant;
@@ -15,8 +13,6 @@ import za.co.shivars.labournet.PsiberTaxCalculator.util.Constant;
  *
  */
 
-@Repository
-@Transactional
 @Service
 public class TaxDataDaoImpl implements TaxDataDao {
 	
@@ -30,44 +26,48 @@ public class TaxDataDaoImpl implements TaxDataDao {
 	
 	int		rebate;
 	
-	public double calculateYearlyTaxSalary(TaxData taxData) {
+	public TaxDataResponse calculateYearlyTaxSalary(TaxData taxData) {
 		
-		if (taxData.getYearEnd().equalsIgnoreCase("2016/2017")) {
-		
+		if (taxData.getYearEnd().equalsIgnoreCase("2017")) {
+			
 			if (taxData.getEarnPeriod().equalsIgnoreCase("MONTHLY")) {
 				
 				yearlyGross = Integer.parseInt(taxData.getGrossIncome()) * 12;
+				
 				System.out.println("Your Tax Gross" + yearlyGross);
-				calculateTaxRate2017(yearlyGross, taxData.getAge());
+				return calculateTaxRate2017(yearlyGross, taxData.getAge());
 				
 			}
-			else if (taxData.getEarnPeriod().equalsIgnoreCase("YEARLY")) {
-			
+			else {
+				
 				yearlyGross = Integer.parseInt(taxData.getGrossIncome());
+				
 				System.out.println("Your Tax is  gross" + yearlyGross + taxData.getAge());
-				calculateTaxRate2017(yearlyGross, taxData.getAge());
+				return calculateTaxRate2017(yearlyGross, taxData.getAge());
 			}
 			
 		}
-		
-		if (taxData.getYearEnd().equals("2017/2018")) {
+		else if (taxData.getYearEnd().equals("2018")) {
 			if (taxData.getEarnPeriod().equalsIgnoreCase("MONTHLY")) {
 				yearlyGross = Integer.parseInt(taxData.getGrossIncome()) * 12;
 				
-				calculateTaxRate2018(yearlyGross, taxData.getAge());
+				return calculateTaxRate2018(yearlyGross, taxData.getAge());
+				
 			}
-			else if (taxData.getEarnPeriod().equalsIgnoreCase("YEARLY")) {
+			else {
 				yearlyGross = Integer.parseInt(taxData.getGrossIncome());
 				
-				calculateTaxRate2018(yearlyGross, taxData.getAge());
+				return calculateTaxRate2018(yearlyGross, taxData.getAge());
 			}
 		}
-		
-		return tax;
+		else {
+			return null;
+		}
 	}
 	
-	private int calculateTaxRate2017(Integer totalIncome, String ageLevel) {
+	private TaxDataResponse calculateTaxRate2017(Integer totalIncome, String ageLevel) {
 		
+		TaxDataResponse tdata = new TaxDataResponse();
 		int primary = 13500;
 		int secondary = 7407;
 		int tertiary = 2466;
@@ -97,6 +97,8 @@ public class TaxDataDaoImpl implements TaxDataDao {
 			
 		}
 		
+		tdata.setTax(Math.round(tax));
+		
 		//
 		
 		if (Integer.parseInt(ageLevel) < 65) {
@@ -116,33 +118,34 @@ public class TaxDataDaoImpl implements TaxDataDao {
 			
 		}
 		
-		System.out.println("Your Monthly Tax is " + MonthlyTax);
-		System.out.println("Your Annual Tax is " + tax);
-		
-		MonthlyGross = totalIncome / 12;
-		netSalary = MonthlyGross - MonthlyTax;
-		System.out.println("Your monthly Salary is" + netSalary);
-		System.out.println("Your monthly Tax is" + MonthlyTax);
-		
-		
 		// Tax Threshold
+		
 		if (Integer.parseInt(ageLevel) < 65 && yearlyGross < 75000) {
-			return 0;
+			tax = 0.0;
 		}
 		else if (Integer.parseInt(ageLevel) >= 65 && Integer.parseInt(ageLevel) < 75
 				&& yearlyGross < 116150) {
-			return 0;
+			tax = 0.0;
 		}
-		else if (Integer.parseInt(ageLevel) >= 7 && yearlyGross < 129850) {
-			return 0;
+		else if (Integer.parseInt(ageLevel) >= 75 && yearlyGross < 129850) {
+			tax = 0.0;
 		}
 		
-		return 0;
+		MonthlyGross = totalIncome / 12;
+		netSalary = MonthlyGross - MonthlyTax;
+		
+		tdata.setMonthlyGross(MonthlyGross);
+		tdata.setMonthlyTax(MonthlyTax);
+		tdata.setNetSalary(netSalary);
+		tdata.setYearlyGross(yearlyGross);
+		
+		return tdata;
 		
 	}
 	
-	private int calculateTaxRate2018(Integer totalIncome, String ageLevel) {
+	private TaxDataResponse calculateTaxRate2018(Integer totalIncome, String ageLevel) {
 		
+		TaxDataResponse tdata = new TaxDataResponse();
 		int primary = 13635;
 		int secondary = 7479;
 		int tertiary = 2493;
@@ -172,39 +175,44 @@ public class TaxDataDaoImpl implements TaxDataDao {
 		// Tax Rebate
 		if (Integer.parseInt(ageLevel) < 65) {
 			tax -= primary;
-		
+			
 		}
 		
 		if (Integer.parseInt(ageLevel) >= 65) {
 			rebate = primary + secondary;
-		
+			
 			tax -= rebate;
 			MonthlyTax = tax / 12;
-			
 			
 		}
 		if (Integer.parseInt(ageLevel) >= 75) {
 			tax -= primary + tertiary;
-			System.out.println("Your Tax is Tertiary" + tax);
+			
+		}
+		
+		// Tax Threshold
+		
+		if (Integer.parseInt(ageLevel) < 65 && yearlyGross < 75000) {
+			tax = 0.0;
+		}
+		else if (Integer.parseInt(ageLevel) >= 65 && Integer.parseInt(ageLevel) < 75
+				&& yearlyGross < 117300) {
+			tax = 0.0;
+		}
+		else if (Integer.parseInt(ageLevel) >= 75 && yearlyGross < 131150) {
+			tax = 0.0;
 		}
 		
 		MonthlyGross = totalIncome / 12;
 		netSalary = MonthlyGross - MonthlyTax;
-		System.out.println("Your monthly is" + netSalary);
 		
-		// Tax Threshold
-		if (Integer.parseInt(ageLevel) < 65 && yearlyGross < 75000) {
-			return 0;
-		}
-		else if (Integer.parseInt(ageLevel) >= 65 && Integer.parseInt(ageLevel) < 75
-				&& yearlyGross < 117300) {
-			return 0;
-		}
-		else if (Integer.parseInt(ageLevel) >= 7 && yearlyGross < 131150) {
-			return 0;
-		}
+		tdata.setTax(tax);
+		tdata.setMonthlyGross(MonthlyGross);
+		tdata.setMonthlyTax(MonthlyTax);
+		tdata.setNetSalary(netSalary);
+		tdata.setYearlyGross(yearlyGross);
 		
-		return 0;
+		return tdata;
 		
 	}
 	

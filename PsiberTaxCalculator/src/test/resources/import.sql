@@ -18,6 +18,4 @@
 -- Use only for a proof of concept
 
 -- You can use this file to load seed data into the database using SQL statements
-insert into Member (id, name, email, phone_number) values (0, 'John Smith', 'john.smith@mailinator.com', '2125551212')
-
-insert into taxData (id, grossAmount, taxYear, netPay, tax) values (0, '30000', '2016/2017', '0', 200)
+--insert into Member (id, name, email, phone_number) values (0, 'John Smith', 'john.smith@mailinator.com', '2125551212')

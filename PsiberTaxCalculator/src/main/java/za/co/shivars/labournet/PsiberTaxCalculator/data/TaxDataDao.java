@@ -11,7 +11,8 @@ import za.co.shivars.labournet.PsiberTaxCalculator.model.TaxData;
  */
 public interface TaxDataDao {
 	
-	public double calculateYearlyTaxSalary(TaxData taxData);
+	public TaxDataResponse calculateYearlyTaxSalary(TaxData taxData);
+
 	
 
 	

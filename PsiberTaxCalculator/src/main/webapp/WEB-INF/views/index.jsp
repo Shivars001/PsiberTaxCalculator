@@ -1,128 +1,110 @@
-<%--
-    JBoss, Home of Professional Open Source
-    Copyright 2013, Red Hat, Inc. and/or its affiliates, and individual
-    contributors by the @authors tag. See the copyright.txt in the
-    distribution for a full listing of individual contributors.
 
-    Licensed under the Apache License, Version 2.0 (the "License");
-    you may not use this file except in compliance with the License.
-    You may obtain a copy of the License at
-    http://www.apache.org/licenses/LICENSE-2.0
-    Unless required by applicable law or agreed to in writing, software
-    distributed under the License is distributed on an "AS IS" BASIS,
-    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-    See the License for the specific language governing permissions and
-    limitations under the License.
---%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
+
 
 <html>
 
 <head>
-    <title>Spring MVC Starter Application</title>
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
-    <link rel="stylesheet" type="text/css" href="<c:url value="/static/resources/css/screen.css"/>"/>
+<title>Spring MVC Tax Calculations</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" type="text/css"
+	href="<c:url value="/static/resources/css/screen.css"/>" />
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script
+	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 </head>
 
 <body>
-<div id="container">
-    <div class="dualbrand">
-        <img src="<c:url value="/static/resources/gfx/rhjb_eap_logo.png"/>"/>
-    </div>
-    <div id="content">
-        <h1>Welcome to JBoss!</h1>
+	<div id="container">
 
-        <div>
-            <p>You have successfully deployed a basic Spring MVC web application.</p>
-        </div>
+		<div id="content" align="center">
+			<h1>Welcome Psiber Tax Solutions</h1>
+			<form:form action="calculate" method="post" modelAttribute="taxData">
 
-        <form:form commandName="newMember" id="reg">
-            <h2>Member Registration</h2>
+				<table>
+					<tbody>
 
-            <p>Enforces annotation-based constraints defined on the model class.</p>
-            <table>
-                <tbody>
-                <tr>
-                    <td><form:label path="name">Name:</form:label></td>
-                    <td><form:input path="name"/></td>
-                    <td><form:errors class="invalid" path="name"/></td>
-                </tr>
-                <tr>
-                    <td><form:label path="email">Email:</form:label></td>
-                    <td><form:input path="email"/></td>
-                    <td><form:errors class="invalid" path="email"/></td>
-                </tr>
-                <tr>
-                    <td><form:label path="phoneNumber">Phone #:</form:label></td>
-                    <td><form:input path="phoneNumber"/></td>
-                    <td><form:errors class="invalid" path="phoneNumber"/></td>
-                </tr>
-                <tr>
-                    <td><p style="color: red">${error}</p></td>
-                </tr>
-                </tbody>
-            </table>
-            <table>
-                <tr>
-                    <td>
-                        <input type="submit" value="Register" class="register"/>
-                        <input type="reset" value="Cancel" class="cancel"/>
-                    </td>
-                </tr>
-            </table>
-        </form:form>
-        <h2>Members</h2>
-        <c:choose>
-            <c:when test="${members.size()==0}">
-                <em>No registered members.</em>
-            </c:when>
-            <c:otherwise>
-                <table class="simpletablestyle">
-                    <thead>
-                        <tr>
-                            <th>Id</th>
-                            <th>Name</th>
-                            <th>Email</th>
-                            <th>Phone #</th>
-                            <th>REST URL</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <c:forEach items="${members}" var="member">
-                            <tr>
-                                <td>${member.id}</td>
-                                <td>${member.name}</td>
-                                <td>${member.email}</td>
-                                <td>${member.phoneNumber}</td>
-                                <td><a href="<c:url value="/rest/members/${member.id}"/>">/rest/members/${member.id}</a></td>
-                            </tr>
-                        </c:forEach>
-                    </tbody>
-                </table>
-                <table class="simpletablestyle">
-                    <tr>
-                        <td>
-                            REST URL for all members: <a href="<c:url value="/rest/members"/>">/rest/members</a>
-                        </td>
-                    </tr>
-                </table>
-            </c:otherwise>
-        </c:choose>
-    </div>
-    <div id="aside">
-        <p>Learn more about JBoss Enterprise Application Platform 6.</p>
-        <ul>
-            <li><a href="https://access.redhat.com/site/documentation/JBoss_Enterprise_Application_Platform/">Documentation</a></li>
-            <li><a href="http://red.ht/jbeap-6">Product Information</a></li>
-        </ul>
-    </div>
-    <div id="footer">
-        <p>
-            This project was generated from a Maven archetype from
-            JBoss.<br/>
-        </p>
-    </div>
-</div>
+						<tr>
+							<th align="left">Please Select Tax Year:</th>
+							<td class="taxData"><select name="yearEnd">
+									<option value="2018">2018 (Mar 2017 - Feb 2018)</option>
+									<option value="2017">2017 (Mar 2016 - Feb 2017)</option>
+							</select></td>
+						</tr>
+
+						<tr>
+							<th align="left">Please select your Age group:</th>
+							<td class="taxData"><select name="age">
+									<option value="65">Under 65</option>
+									<option value="75">65 - 75</option>
+									<option value="80">Over 75</option>
+							</select></td>
+						</tr>
+						<tr>
+
+							<th align="left">Please Select Tax Period :</th>
+							<td class="taxData"><select name="earnPeriod">
+									<option value="monthly" selected>Monthly</option>
+									<option value="yearly">Yearly</option>
+							</select></td>
+
+
+						</tr>
+						<tr>
+							<th align="left">Please Enter your Gross Income:</th>
+							<td><input type="text" name="grossIncome"
+								onkeyup="this.value=this.value.replace(/[^1234567890.]/g, '');" /></td>
+						</tr>
+
+					</tbody>
+				</table>
+				<table>
+					<tr>
+						<td><input type="submit" value="Submit"
+							class="taxData btn-success" /></td>
+
+
+					</tr>
+				</table>
+
+			</form:form>
+
+			<h2>Calculated Taxations</h2>
+
+			<table class="table table-hover">
+				<thead>
+					<tr>
+						<th>Total CTC</th>
+						<th>Total TAX</th>
+						<th>Monthly Tax</th>
+						<th>NetSalary</th>
+					</tr>
+				</thead>
+
+				<tbody>
+					<tr>
+						<td>${calculatedTaxResponse.yearlyGross}</td>
+						<td>${calculatedTaxResponse.tax}</td>
+						<td>${calculatedTaxResponse.monthlyTax}</td>
+						<td>${calculatedTaxResponse.netSalary}</td>
+
+					</tr>
+				</tbody>
+			</table>
+
+		</div>
+
+
+	</div>
+
+	<div id="footer">
+		<p>
+			This is a mini Tax Calculation Application by Shivars.<br />
+		</p>
+	</div>
 </body>
 </html>

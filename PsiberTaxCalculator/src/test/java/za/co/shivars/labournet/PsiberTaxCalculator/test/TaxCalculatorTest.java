@@ -31,9 +31,10 @@ public class TaxCalculatorTest {
 		data.setEarnPeriod("MONTHLY");
 		data.setGrossIncome("30000");
 		data.setMedMembers("0");
-		data.setYearEnd("2016/2017");
+		data.setYearEnd("2017");
 		
 		taxDataDao.calculateYearlyTaxSalary(data);
+		
 	
 		
 	}
@@ -46,7 +47,7 @@ public class TaxCalculatorTest {
 		data.setEarnPeriod("YEARLY");
 		data.setGrossIncome("360000");
 		data.setMedMembers("0");
-		data.setYearEnd("2017/2018");
+		data.setYearEnd("2018");
 		
 		taxDataDao.calculateYearlyTaxSalary(data);
 	
