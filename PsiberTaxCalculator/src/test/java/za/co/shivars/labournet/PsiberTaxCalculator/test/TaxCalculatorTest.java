@@ -1,6 +1,8 @@
 
 package za.co.shivars.labournet.PsiberTaxCalculator.test;
 
+import static org.junit.Assert.assertNotNull;
+
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,6 +12,7 @@ import org.springframework.test.context.transaction.TransactionConfiguration;
 import org.springframework.transaction.annotation.Transactional;
 
 import za.co.shivars.labournet.PsiberTaxCalculator.data.TaxDataDao;
+import za.co.shivars.labournet.PsiberTaxCalculator.data.TaxDataResponse;
 import za.co.shivars.labournet.PsiberTaxCalculator.model.TaxData;
 
 @RunWith(SpringJUnit4ClassRunner.class)
@@ -21,7 +24,8 @@ import za.co.shivars.labournet.PsiberTaxCalculator.model.TaxData;
 public class TaxCalculatorTest {
 	
 	@Autowired
-	TaxDataDao taxDataDao;
+	TaxDataDao		taxDataDao;
+	TaxDataResponse	response	= new TaxDataResponse();
 	
 	@Test
 	public void saveTaxMonthlyData() {
@@ -33,9 +37,9 @@ public class TaxCalculatorTest {
 		data.setMedMembers("0");
 		data.setYearEnd("2017");
 		
-		taxDataDao.calculateYearlyTaxSalary(data);
+		response = taxDataDao.calculateYearlyTaxSalary(data);
 		
-	
+		assertNotNull(response);
 		
 	}
 	
@@ -49,8 +53,7 @@ public class TaxCalculatorTest {
 		data.setMedMembers("0");
 		data.setYearEnd("2018");
 		
-		taxDataDao.calculateYearlyTaxSalary(data);
-	
-		
+		response = taxDataDao.calculateYearlyTaxSalary(data);
+		assertNotNull(response);
 	}
 }
